@@ -1,5 +1,6 @@
 pipeline {
     agent any
+     
 
     parameters {
         string(name: 'IMAGE_NAME', defaultValue: 'node-app', description: 'Docker image name')
@@ -11,6 +12,29 @@ pipeline {
         stage('Checkout Code') {
             steps {
                 git branch: 'main', url: 'https://github.com/shanchalsenthil/nodejs-docker-app.git'
+            }
+        }
+
+        stage('Manual Approval') {
+            steps {
+                emailext(
+                    subject: "Approval Needed: ${JOB_NAME} #${BUILD_NUMBER}",
+                    body: """
+Hi Team,
+
+Build #${BUILD_NUMBER} is waiting for approval.
+
+Job Name : ${JOB_NAME}
+Build URL: ${BUILD_URL}
+
+Please login to Jenkins and approve the build to continue.
+""",
+                    to: "shanchalsenthil@gmail.com"
+                )
+
+                input message: "Approve to continue deployment?",
+                      submitter: "admin",
+                      ok: "Approve"
             }
         }
 
