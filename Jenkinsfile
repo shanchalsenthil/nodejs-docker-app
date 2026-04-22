@@ -1,7 +1,6 @@
 pipeline {
     agent any
      
-
     parameters {
         string(name: 'IMAGE_NAME', defaultValue: 'node-app', description: 'Docker image name')
         string(name: 'PORT', defaultValue: '9000', description: 'Port number')
@@ -52,6 +51,57 @@ Please login to Jenkins and approve the build to continue.
                 docker run -d -p ${params.PORT}:3000 --name node-container ${params.IMAGE_NAME}
                 """
             }
+        }
+    }
+
+    post {
+
+        success {
+            emailext(
+                subject: "SUCCESS: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+Build SUCCESSFUL..
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+
+Build URL:
+${BUILD_URL}
+""",
+                to: "shanchalsenthil@gmail.com"
+            )
+        }
+
+        failure {
+            emailext(
+                subject: "FAILED: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+Build FAILED..
+
+Job: ${JOB_NAME}
+Build Number: ${BUILD_NUMBER}
+
+Check logs:
+${BUILD_URL}
+""",
+                to: "shanchalsenthil@gmail.com"
+            )
+        }
+
+        aborted {
+            emailext(
+                subject: "ABORTED: ${JOB_NAME} #${BUILD_NUMBER}",
+                body: """
+Build ABORTED..
+
+Reason:
+Manual approval was rejected or build was stopped.
+
+Build URL:
+${BUILD_URL}
+""",
+                to: "shanchalsenthil@gmail.com"
+            )
         }
     }
 }
