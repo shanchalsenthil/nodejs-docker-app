@@ -3,7 +3,7 @@ pipeline {
      
     parameters {
         string(name: 'IMAGE_NAME', defaultValue: 'node-app', description: 'Docker image name')
-        string(name: 'PORT', defaultValue: '9000', description: 'Port number')
+        string(name: 'PORT', defaultValue: '9001', description: 'Port number')
     }
 
     stages {
