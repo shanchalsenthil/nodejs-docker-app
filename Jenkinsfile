@@ -1,9 +1,8 @@
 pipeline {
     agent any
-     
+
     parameters {
         string(name: 'IMAGE_NAME', defaultValue: 'node-app', description: 'Docker image name')
-        string(name: 'PORT', defaultValue: '9001', description: 'Port number')
     }
 
     stages {
@@ -48,8 +47,14 @@ Please login to Jenkins and approve the build to continue.
                 sh """
                 docker stop node-container || true
                 docker rm node-container || true
-                docker run -d -p ${params.PORT}:3000 --name node-container ${params.IMAGE_NAME}
+                docker run -d -P --name node-container ${params.IMAGE_NAME}
                 """
+            }
+        }
+
+        stage('Show Running Port') {
+            steps {
+                sh "docker ps"
             }
         }
     }
@@ -64,6 +69,9 @@ Build SUCCESSFUL..
 
 Job: ${JOB_NAME}
 Build Number: ${BUILD_NUMBER}
+
+Container is running.
+Use 'docker ps' to find the mapped port.
 
 Build URL:
 ${BUILD_URL}
