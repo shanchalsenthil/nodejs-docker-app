@@ -27,7 +27,7 @@ Build URL: ${BUILD_URL}
 
 Please login to Jenkins and approve the build to continue.
 """,
-                    to: "shanchalsenthil@gmail.com"
+                    to: "boobalan.a@vvdntech.in"
                 )
 
                 input message: "Approve to continue deployment?",
@@ -76,7 +76,7 @@ Use 'docker ps' to find the mapped port.
 Build URL:
 ${BUILD_URL}
 """,
-                to: "shanchalsenthil@gmail.com"
+                to: "boobalan.a@vvdntech.in"
             )
         }
 
@@ -92,7 +92,7 @@ Build Number: ${BUILD_NUMBER}
 Check logs:
 ${BUILD_URL}
 """,
-                to: "shanchalsenthil@gmail.com"
+                to: "boobalan.a@vvdntech.in"
             )
         }
 
@@ -108,7 +108,7 @@ Manual approval was rejected or build was stopped.
 Build URL:
 ${BUILD_URL}
 """,
-                to: "shanchalsenthil@gmail.com"
+                to: "boobalan.a@vvdntech.in"
             )
         }
     }
